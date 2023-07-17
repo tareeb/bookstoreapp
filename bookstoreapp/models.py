@@ -82,3 +82,17 @@ class Favorite(models.Model):
     def __str__(self):
         return f"Favorite {self.id} by {self.user.name} for Book {self.book.name}"
 
+class Order(models.Model):
+    STATUS_CHOICES = (
+        ('pending', 'Pending'),
+        ('delivery', 'Delivery'),
+        ('received', 'Received'),
+    )
+    id = models.AutoField(primary_key=True)
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    date = models.DateField(auto_now_add=True)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
+
+    def __str__(self):
+        return f"Order {self.id} - Book: {self.book.name}, User: {self.user.name}"

@@ -55,10 +55,10 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-CORS_ORIGIN_ALLOW_ALL = False  # Set to True if you want to allow all origins
-CORS_ORIGIN_WHITELIST = [
-    'http://localhost:3000',  # Replace with your frontend server URL
-]
+CORS_ORIGIN_ALLOW_ALL = True  # Set to True if you want to allow all origins
+# CORS_ORIGIN_WHITELIST = [
+#     'http://localhost:3000',  # Replace with your frontend server URL
+# ]
 
 ROOT_URLCONF = 'bookstore.urls'
 

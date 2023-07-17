@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import User, Writer, Book, Testimonial, Review, Comment, Favorite
+from .models import User, Writer, Book, Testimonial, Review, Comment, Favorite , Order
 
 # Register your models here.
 
@@ -38,3 +38,8 @@ class FavoriteAdmin(admin.ModelAdmin):
     
 admin.site.register(Favorite)
 
+
+class OrderAdmin(admin.ModelAdmin):
+    list_display = ('id', 'user', 'book', 'total_price', 'date')
+    
+admin.site.register(Order)

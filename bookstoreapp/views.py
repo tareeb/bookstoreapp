@@ -5,8 +5,9 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.decorators import authentication_classes, permission_classes
-from .serializers import UserSerializer , WriterSerializer , BookSerializer , TestimonialSerializer , ReviewSerializer , CommentSerializer , FavoriteSerializer
-from .models import User , Writer , Book , Testimonial , Review , Comment , Favorite
+from .serializers import UserSerializer , WriterSerializer , BookSerializer , TestimonialSerializer
+from .serializers import ReviewSerializer , CommentSerializer , FavoriteSerializer , OrderSerializer
+from .models import User , Writer , Book , Testimonial , Review , Comment , Favorite , Order
 
 def hey(request):
     return HttpResponse("Hello world!")
@@ -156,6 +157,8 @@ def getcommentbyreview(request, review_id):
 #favourites
 
 @api_view(['POST'])
+@permission_classes([]) 
+@authentication_classes([])  
 def addfav(request):
     serializer = FavoriteSerializer(data=request.data)
     if serializer.is_valid():
@@ -175,8 +178,31 @@ def removefav(request):
         return Response({'error': 'Favorite does not exist'}, status=404)
 
 @api_view(['GET'])
+@permission_classes([]) 
+@authentication_classes([])  
 def getallfav(request, user_id):
     favorites = Favorite.objects.filter(user_id=user_id)
     serializer = FavoriteSerializer(favorites, many=True)
     return Response(serializer.data)
 
+
+####################################################################################
+# orders
+
+@api_view(['POST'])
+@permission_classes([]) 
+@authentication_classes([]) 
+def addOrder(request):
+    serializer = OrderSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=201)
+    return Response(serializer.errors, status=400)
+
+@api_view(['GET'])
+@permission_classes([]) 
+@authentication_classes([]) 
+def getAllOrdersByUserId(request, user_id):
+    orders = Order.objects.filter(user_id=user_id)
+    serializer = OrderSerializer(orders, many=True)
+    return Response(serializer.data)

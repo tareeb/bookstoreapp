@@ -20,4 +20,6 @@ urlpatterns = [
     path('addfav/', views.addfav, name='add-favorite'),
     path('removefav/', views.removefav, name='remove-favorite'),
     path('getallfav/<int:user_id>/', views.getallfav, name='get-all-favorites'),
+    path('addorder/', views.addOrder),
+    path('getallorders/<int:user_id>/', views.getAllOrdersByUserId),
 ]

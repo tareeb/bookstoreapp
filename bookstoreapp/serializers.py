@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User, Writer, Book, Testimonial, Review, Comment, Favorite
+from .models import User, Writer, Book, Testimonial, Review, Comment, Favorite , Order
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -55,6 +55,19 @@ class FavoriteSerializer(serializers.ModelSerializer):
         model = Favorite
         fields = ['id', 'book', 'user', 'bookname']
 
+    def get_username(self, obj):
+        return obj.user.name
+
+    def get_bookname(self, obj):
+        return obj.book.name
+
+class OrderSerializer(serializers.ModelSerializer):
+    bookname = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Order
+        fields = ['id', 'book', 'bookname' ,  'user' , 'date' , 'status']
+        
     def get_username(self, obj):
         return obj.user.name
 
